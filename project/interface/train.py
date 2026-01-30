@@ -29,7 +29,7 @@ def render_train_interface(
 
     fig = plots.plot_out(dataset)
     fig.update_layout(width=600, height=600)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig,key=f"{selected_dataset}-{points}")
 
     st.markdown("### Model")
     if hidden_layer:
@@ -124,7 +124,7 @@ def render_train_interface(
         df.append({"epoch": epoch, "loss": total_loss, "correct": correct})
         st_epoch_stats.write(pd.DataFrame(reversed(df)))
 
-        st_epoch_image.plotly_chart(plot())
+        st_epoch_image.plotly_chart(plot(), key=f"epoch-plot-{epoch}")
         if hasattr(train, "train"):
             loss_graph = go.Scatter(mode="lines", x=list(range(len(losses))), y=losses)
             fig = go.Figure(loss_graph)
